@@ -2,25 +2,11 @@
 
 #include "PluginProcessor.h"
 
-namespace UIConstants
-{
-// 5-color palette
-const juce::Colour background    = juce::Colour(0xff1B3C53);
-const juce::Colour primary       = juce::Colour(0xffDFD0B8);
-const juce::Colour secondary     = juce::Colour(0xff456882);
-const juce::Colour text          = juce::Colour(0xffE0D9D9);
-const juce::Colour highlight     = juce::Colour(0xffD3DAD9);
-
-// Sizing constants
-const int knobSize = 80;
-const int margin = 20;
-}
-
 //==============================================================================
 class PluginEditor : public juce::AudioProcessorEditor
 {
 public:
-    explicit PluginEditor (WaveshaperProcessor&);
+    explicit PluginEditor (TubeModelProcessor&);
     ~PluginEditor() override;
 
     //==============================================================================
@@ -30,10 +16,10 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    WaveshaperProcessor& processorRef;
+    TubeModelProcessor& processorRef;
     
     // Custom Look and Feel
-    // punk_dsp::ExamplesLnF myCustomLnF;
+    punk_dsp::ExamplesLnF myCustomLnF;
     
     // Layout utilities
     juce::TextButton header, params;
@@ -46,6 +32,15 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveAttachment, outGainAttachment, biasPreAttachment, biasPostAttachment, coeffPosAttachment, coeffNegAttachment, sagTimeAttachment, harmGainAttachment, harmBalanceAttachment;
     
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> harmSCAttachment;
+    
+    void updateToggleButtonText()
+    {
+        // Check the current toggle state and update text accordingly
+        if (harmSCButton.getToggleState())
+            harmSCButton.setButtonText("Driven");
+        else
+            harmSCButton.setButtonText("Un-driven");
+    }
         
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
 };

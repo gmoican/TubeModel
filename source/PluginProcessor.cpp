@@ -2,7 +2,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-WaveshaperProcessor::WaveshaperProcessor()
+TubeModelProcessor::TubeModelProcessor()
 : AudioProcessor (BusesProperties()
 #if ! JucePlugin_IsMidiEffect
 #if ! JucePlugin_IsSynth
@@ -14,17 +14,17 @@ WaveshaperProcessor::WaveshaperProcessor()
 {
 }
 
-WaveshaperProcessor::~WaveshaperProcessor()
+TubeModelProcessor::~TubeModelProcessor()
 {
 }
 
 //==============================================================================
-const juce::String WaveshaperProcessor::getName() const
+const juce::String TubeModelProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool WaveshaperProcessor::acceptsMidi() const
+bool TubeModelProcessor::acceptsMidi() const
 {
 #if JucePlugin_WantsMidiInput
     return true;
@@ -33,7 +33,7 @@ bool WaveshaperProcessor::acceptsMidi() const
 #endif
 }
 
-bool WaveshaperProcessor::producesMidi() const
+bool TubeModelProcessor::producesMidi() const
 {
 #if JucePlugin_ProducesMidiOutput
     return true;
@@ -42,7 +42,7 @@ bool WaveshaperProcessor::producesMidi() const
 #endif
 }
 
-bool WaveshaperProcessor::isMidiEffect() const
+bool TubeModelProcessor::isMidiEffect() const
 {
 #if JucePlugin_IsMidiEffect
     return true;
@@ -51,40 +51,40 @@ bool WaveshaperProcessor::isMidiEffect() const
 #endif
 }
 
-double WaveshaperProcessor::getTailLengthSeconds() const
+double TubeModelProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int WaveshaperProcessor::getNumPrograms()
+int TubeModelProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
     // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int WaveshaperProcessor::getCurrentProgram()
+int TubeModelProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void WaveshaperProcessor::setCurrentProgram (int index)
+void TubeModelProcessor::setCurrentProgram (int index)
 {
     juce::ignoreUnused (index);
 }
 
-const juce::String WaveshaperProcessor::getProgramName (int index)
+const juce::String TubeModelProcessor::getProgramName (int index)
 {
     juce::ignoreUnused (index);
     return {};
 }
 
-void WaveshaperProcessor::changeProgramName (int index, const juce::String& newName)
+void TubeModelProcessor::changeProgramName (int index, const juce::String& newName)
 {
     juce::ignoreUnused (index, newName);
 }
 
 // =========== PARAMETER LAYOUT ====================
-juce::AudioProcessorValueTreeState::ParameterLayout WaveshaperProcessor::createParams()
+juce::AudioProcessorValueTreeState::ParameterLayout TubeModelProcessor::createParams()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     
@@ -181,7 +181,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout WaveshaperProcessor::createP
 }
 
 //==============================================================================
-void WaveshaperProcessor::updateParameters()
+void TubeModelProcessor::updateParameters()
 {
     tube.setDrive( juce::Decibels::decibelsToGain( apvts.getRawParameterValue(Parameters::driveId)->load() ) );
     tube.setOutGain( juce::Decibels::decibelsToGain( apvts.getRawParameterValue(Parameters::outGainId)->load() ) );
@@ -199,7 +199,7 @@ void WaveshaperProcessor::updateParameters()
     tube.setHarmonicSidechain( (bool) apvts.getRawParameterValue(Parameters::harmonicsSidechainId)->load() );
 }
 
-void WaveshaperProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void TubeModelProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // juce::dsp::ProcessSpec spec;
     // spec.maximumBlockSize = samplesPerBlock;
@@ -211,13 +211,13 @@ void WaveshaperProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
     updateParameters();
 }
 
-void WaveshaperProcessor::releaseResources()
+void TubeModelProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
-bool WaveshaperProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool TubeModelProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
 #if JucePlugin_IsMidiEffect
     juce::ignoreUnused (layouts);
@@ -239,7 +239,7 @@ bool WaveshaperProcessor::isBusesLayoutSupported (const BusesLayout& layouts) co
 #endif
 }
 
-void WaveshaperProcessor::processBlock (juce::AudioBuffer<float>& buffer,
+void TubeModelProcessor::processBlock (juce::AudioBuffer<float>& buffer,
                                      juce::MidiBuffer& midiMessages)
 {
     juce::ignoreUnused (midiMessages);
@@ -260,19 +260,19 @@ void WaveshaperProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 }
 
 //==============================================================================
-bool WaveshaperProcessor::hasEditor() const
+bool TubeModelProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* WaveshaperProcessor::createEditor()
+juce::AudioProcessorEditor* TubeModelProcessor::createEditor()
 {
     return new PluginEditor (*this);
     // return new juce::GenericAudioProcessorEditor (*this);
 }
 
 //==============================================================================
-void WaveshaperProcessor::getStateInformation (juce::MemoryBlock& destData)
+void TubeModelProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
@@ -280,7 +280,7 @@ void WaveshaperProcessor::getStateInformation (juce::MemoryBlock& destData)
     juce::ignoreUnused (destData);
 }
 
-void WaveshaperProcessor::setStateInformation (const void* data, int sizeInBytes)
+void TubeModelProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -291,5 +291,5 @@ void WaveshaperProcessor::setStateInformation (const void* data, int sizeInBytes
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new WaveshaperProcessor();
+    return new TubeModelProcessor();
 }

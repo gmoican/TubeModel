@@ -68,11 +68,11 @@ namespace Parameters
     constexpr auto harmonicsSidechainDefault = true;
 }
 
-class WaveshaperProcessor : public juce::AudioProcessor
+class TubeModelProcessor : public juce::AudioProcessor
 {
 public:
-    WaveshaperProcessor();
-    ~WaveshaperProcessor() override;
+    TubeModelProcessor();
+    ~TubeModelProcessor() override;
 
     // DEFAULT STUFF ===============================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -112,5 +112,5 @@ private:
     punk_dsp::TubeModel tube;
     
     // =============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaveshaperProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TubeModelProcessor)
 };
