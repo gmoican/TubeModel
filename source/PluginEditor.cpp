@@ -12,7 +12,7 @@ PluginEditor::PluginEditor (TubeModelProcessor& p)
                                                                                .withAlpha(0.25f)
                       );
     header.setEnabled(false);
-    header.setColour(juce::TextButton::textColourOffId, punk_dsp::UIConstants::highlight);     // Text Off
+    header.setColour(juce::TextButton::textColourOffId, punk_dsp::UIConstants::highlight);
     header.setColour(juce::TextButton::textColourOnId, punk_dsp::UIConstants::highlight);
     header.setButtonText ("Punk DSP - TubeModel");
     addAndMakeVisible (header);
